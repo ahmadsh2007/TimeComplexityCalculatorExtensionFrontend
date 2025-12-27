@@ -5,7 +5,7 @@ const API_URL = 'https://timecomplexitycalculatorextension.onrender.com/analyze'
 
 export function activate(context: vscode.ExtensionContext) {
 
-    let disposable = vscode.commands.registerCommand('TimeComplexity.analyze', async () => {
+    const runAnalysis = async (modelName: string) => {
         const editor = vscode.window.activeTextEditor;
         if (!editor) {
             vscode.window.showErrorMessage('No code editor is open.');
@@ -18,13 +18,18 @@ export function activate(context: vscode.ExtensionContext) {
             return;
         }
 
+        const title = modelName.includes('lite') ? 'Lite Model' : 'Normal Model';
+
         vscode.window.withProgress({
             location: vscode.ProgressLocation.Notification,
-            title: "Asking AI for Complexity...",
+            title: `Analyzing with ${title}...`,
             cancellable: false
         }, async (progress) => {
             try {
-                const response = await axios.post(API_URL, { code: text });
+                const response = await axios.post(API_URL, { 
+                    code: text,
+                    model: modelName 
+                });
                 
                 const data = JSON.parse(response.data.raw_output);
                 
@@ -38,12 +43,21 @@ export function activate(context: vscode.ExtensionContext) {
                 });
 
             } catch (error) {
-                vscode.window.showErrorMessage("Failed to analyze. Server might be waking up (wait 1 min).");
+                vscode.window.showErrorMessage(`Failed to analyze. Error: ${error}`);
             }
         });
+    };
+
+    let normalCommand = vscode.commands.registerCommand('timecomplexity.analyzeNormal', () => {
+        runAnalysis('gemini-flash-latest');
     });
 
-    context.subscriptions.push(disposable);
+    let liteCommand = vscode.commands.registerCommand('timecomplexity.analyzeLite', () => {
+        runAnalysis('gemini-flash-lite-latest');
+    });
+
+    context.subscriptions.push(normalCommand);
+    context.subscriptions.push(liteCommand);
 }
 
 export function deactivate() {}

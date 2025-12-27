@@ -3,7 +3,7 @@
   "displayName": "TimeComplexity",
   "description": "AI-powered Time Complexity Calculator",
   "publisher": "LeekMind",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "engines": {
     "vscode": "^1.107.0"
   },
@@ -15,16 +15,25 @@
   "contributes": {
     "commands": [
       {
-        "command": "TimeComplexity.analyze",
-        "title": "Analyze Complexity (AI)"
+        "command": "timecomplexity.analyzeNormal",
+        "title": "Analyze Complexity (Normal)"
+      },
+      {
+        "command": "timecomplexity.analyzeLite",
+        "title": "Analyze Complexity (Lite)"
       }
     ],
     "menus": {
       "editor/context": [
         {
-          "command": "TimeComplexity.analyze",
+          "command": "timecomplexity.analyzeNormal",
           "group": "navigation",
-          "when": "editorHasSelection || editorTextFocus"
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "timecomplexity.analyzeLite",
+          "group": "navigation",
+          "when": "editorHasSelection"
         }
       ]
     }
