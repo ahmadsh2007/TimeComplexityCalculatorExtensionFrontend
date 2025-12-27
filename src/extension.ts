@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import axios from 'axios';
 
-const API_URL = 'https://timecomplexitycalculatorextension.onrender.com/';
+const API_URL = 'https://timecomplexitycalculatorextension.onrender.com/analyze';
 
 export function activate(context: vscode.ExtensionContext) {
 
