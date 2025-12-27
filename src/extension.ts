@@ -5,7 +5,7 @@ const API_URL = 'https://timecomplexitycalculatorextension.onrender.com/';
 
 export function activate(context: vscode.ExtensionContext) {
 
-    let disposable = vscode.commands.registerCommand('aicomplexity.analyze', async () => {
+    let disposable = vscode.commands.registerCommand('TimeComplexity.analyze', async () => {
         const editor = vscode.window.activeTextEditor;
         if (!editor) {
             vscode.window.showErrorMessage('No code editor is open.');
