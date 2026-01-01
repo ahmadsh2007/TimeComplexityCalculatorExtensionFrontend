@@ -112,7 +112,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (!choice) return;
         const modelName = choice.label === 'Lite' ? 'gemini-flash-lite-latest' : 'gemini-flash-latest';
 
-        const statusBarMsg = vscode.window.setStatusBarMessage("$(sync~spin) Analyzing Complexity...", 10000);
+        const statusBarMsg = vscode.window.setStatusBarMessage("$(sync~spin)  Analyzing Complexity...", 10000);
 
         try {
             const data = await runAnalysis(functionCode, modelName);
@@ -121,7 +121,7 @@ export function activate(context: vscode.ExtensionContext) {
                 const tEmoji = getConfidenceEmoji(data.time_confidence);
                 const sEmoji = getConfidenceEmoji(data.space_confidence);
 
-                const resultString = `${tEmoji} Time: ${data.time_complexity} | ${sEmoji} Space: ${data.space_complexity}`;
+                const resultString = `${tEmoji}  Time: ${data.time_complexity} | ${sEmoji} Space: ${data.space_complexity}`;
                 
                 codeLensProvider.setComplexity(cacheKey, resultString);
                 
